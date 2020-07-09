@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     [Range(1,2)]
     public float defaultSprintMultiplier;
     private float sprintMultiplier = 1f;
+
+    public float mouseDeadZone = 1f;
+    public float turnRate;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,8 +57,13 @@ public class PlayerMovement : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         angleVector = mousePos - pivot.position;
-        angle = Mathf.Atan2(angleVector.y, angleVector.x) * Mathf.Rad2Deg;
-        pivot.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        if(angleVector.magnitude > mouseDeadZone){
+            angle = Mathf.Atan2(angleVector.y, angleVector.x) * Mathf.Rad2Deg;
+            pivot.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+
+        
     }
 
     private void UpdateWalkAnimation()
@@ -79,5 +87,9 @@ public class PlayerMovement : MonoBehaviour
         else
             sprintMultiplier = 1f;            
     }
-
+    /*
+    private void OnDrawGizmos(){
+        Gizmos.DrawWireSphere(pivot.position, mouseDeadZone);
+    }
+    */
 }

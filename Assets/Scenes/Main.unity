@@ -1900,8 +1900,10 @@ MonoBehaviour:
   pivot: {fileID: 388067587}
   rb: {fileID: 950445899}
   playerAnimation: {fileID: 1363173983}
-  acceleration: 600
-  dashForce: 250
+  acceleration: 700
+  defaultSprintMultiplier: 1.7
+  mouseDeadZone: 0.45
+  turnRate: 30
 --- !u!58 &950445898
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1931,7 +1933,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 10
-  m_LinearDrag: 12
+  m_LinearDrag: 15
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
