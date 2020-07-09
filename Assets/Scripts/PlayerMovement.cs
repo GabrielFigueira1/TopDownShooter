@@ -19,9 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 playerVelocity;
     public float acceleration;
-    public float dashForce = 4f;
 
-    private bool isDashing = false;
+    [Range(1,2)]
+    public float defaultSprintMultiplier;
+    private float sprintMultiplier = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,13 +34,12 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer();
         UpdateAxisInputs();
         UpdateWalkAnimation();
-        GetDashButton();
+        UpdateSprintButton();
     }
 
     void FixedUpdate()
     {
         SmoothMovement();
-        Dash();
     }
 
     private void UpdateAxisInputs()
@@ -68,26 +68,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void SmoothMovement()
     {
-        rb.AddForce(Axis * acceleration);
+        rb.AddForce(Axis * acceleration * sprintMultiplier);
     }
 
-    private void GetDashButton()
+    private void UpdateSprintButton()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            isDashing = true;
-        }
+        if(Input.GetButton("Jump"))
+            sprintMultiplier = defaultSprintMultiplier;
+    
+        else
+            sprintMultiplier = 1f;            
     }
 
-    private void Dash()
-    {
-        if (isDashing)
-        {
-            if (rb.velocity.magnitude < 0.1 && Axis.magnitude == 0)
-                rb.AddForce(angleVector.normalized * dashForce, ForceMode2D.Impulse);
-            else
-                rb.AddForce(rb.velocity.normalized * dashForce, ForceMode2D.Impulse);
-            isDashing = false;
-        }
-    }
 }
