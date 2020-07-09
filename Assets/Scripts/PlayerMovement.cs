@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 150f;
 
     private float xAxis;
     private float yAxis;
@@ -18,8 +17,11 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator playerAnimation;
 
-    private float orthographicSize = 5f;
+    private Vector2 playerVelocity;
+    public float acceleration;
+    public float dashForce = 4f;
 
+    private bool isDashing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,52 +30,64 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        calculateOrthographicSize();
-        rotatePlayer();
-        updateAxisInputs();
-        updateWalkAnimation();
+        RotatePlayer();
+        UpdateAxisInputs();
+        UpdateWalkAnimation();
+        GetDashButton();
     }
 
-    void FixedUpdate() {
-        
-        rb.velocity = Axis*speed*Time.deltaTime; //Movimentacao
-    }
-    void LateUpdate() {
-        cameraZoomEfect(orthographicSize);
+    void FixedUpdate()
+    {
+        SmoothMovement();
+        Dash();
     }
 
-    private void updateAxisInputs(){
+    private void UpdateAxisInputs()
+    {
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
         Axis = new Vector2(xAxis, yAxis);
         Axis.Normalize();
     }
 
-    private void rotatePlayer(){
+    private void RotatePlayer()
+    {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         angleVector = mousePos - pivot.position;
         angle = Mathf.Atan2(angleVector.y, angleVector.x) * Mathf.Rad2Deg;
         pivot.rotation = Quaternion.Euler(0f, 0f, angle);
     }
-    
-    void updateWalkAnimation(){
-        if(rb.velocity.magnitude > 0.1)
+
+    private void UpdateWalkAnimation()
+    {
+        if (rb.velocity.magnitude > 0.1)
             playerAnimation.SetBool("isWalking", true);
         else
             playerAnimation.SetBool("isWalking", false);
     }
 
-    private void cameraZoomEfect(float newOrthoSize){
-
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, newOrthoSize, 0.05f);
-    }
-    private void calculateOrthographicSize(){
-       if(Mathf.Abs(pivot.position.x - mousePos.x) < 4.5f && Mathf.Abs(pivot.position.y - mousePos.y) < 3f){
-           orthographicSize = 5f;
-       }
-        else
-            orthographicSize = 5.2f;
+    private void SmoothMovement()
+    {
+        rb.AddForce(Axis * acceleration);
     }
 
+    private void GetDashButton()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            isDashing = true;
+        }
+    }
+
+    private void Dash()
+    {
+        if (isDashing)
+        {
+            if (rb.velocity.magnitude < 0.1 && Axis.magnitude == 0)
+                rb.AddForce(angleVector.normalized * dashForce, ForceMode2D.Impulse);
+            else
+                rb.AddForce(rb.velocity.normalized * dashForce, ForceMode2D.Impulse);
+            isDashing = false;
+        }
+    }
 }
-
