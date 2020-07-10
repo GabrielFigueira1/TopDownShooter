@@ -11,9 +11,11 @@ public class CameraFollow : MonoBehaviour
     public float speed = 2f;
     private Vector2 threshold;
 
-    public Vector2 minBondarys;
-    public Vector2 maxBondarys;
-
+    private Vector3 newPosition;
+    private float moveSpeed;
+    
+    [Range(0, 1f)]
+    public float cameraDistanceFactor;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,15 +24,16 @@ public class CameraFollow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        Vector2 follow = player.transform.position;
+    void LateUpdate()
+    {   
+        Vector3 playerToPoint = (- player.position + Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Vector2 follow = player.position + (playerToPoint * cameraDistanceFactor);
 
         /*Calcula a distancia do objeto a camera*/
         float xDifference = Vector2.Distance(Vector2.right*transform.position.x, Vector2.right*follow.x);
         float yDifference = Vector2.Distance(Vector2.up*transform.position.y, Vector2.up*follow.y);
     
-        Vector3 newPosition = transform.position;
+        newPosition = transform.position;
         if(Mathf.Abs(xDifference)>=threshold.x){
             newPosition.x = follow.x;
         }
@@ -38,19 +41,12 @@ public class CameraFollow : MonoBehaviour
             newPosition.y = follow.y;
         }
         
+        moveSpeed = rb.velocity.magnitude > speed ? moveSpeed = Mathf.Lerp(moveSpeed, rb.velocity.magnitude, Time.deltaTime*2.3f): speed;
         
-        float moveSpeed = rb.velocity.magnitude > speed ? rb.velocity.magnitude : speed;
-        
-        
-
-        transform.position = new Vector3
-        (
-        Mathf.Clamp (transform.position.x, minBondarys.x, maxBondarys.x),
-        Mathf.Clamp (transform.position.y, minBondarys.y, maxBondarys.y),
-        transform.position.z
-        );
-        
+    }
+    void FixedUpdate(){
         transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed*Time.deltaTime);
+
     }
     private Vector3 CalculateThreshold(){
         Rect aspect = Camera.main.pixelRect;
@@ -64,11 +60,5 @@ public class CameraFollow : MonoBehaviour
         Gizmos.color = Color.blue;
         Vector2 border = CalculateThreshold();
         Gizmos.DrawWireCube(transform.position, new Vector3(border.x*2, border.y*2, 1));
-
-        Gizmos.DrawLine(Vector3.up*(minBondarys.y-Camera.main.orthographicSize), Vector3.up*(maxBondarys.y+Camera.main.orthographicSize));
-
-        Gizmos.DrawLine(Vector3.right*(minBondarys.x-Camera.main.orthographicSize*Camera.main.aspect), Vector3.right*(maxBondarys.x+Camera.main.orthographicSize*Camera.main.aspect));
-
-        
     }
 }

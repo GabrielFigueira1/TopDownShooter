@@ -249,12 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e3a03c218daec428a3cf3cb4a2373c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 950445896}
-  followOffset: {x: 8.04, y: 4.13}
+  player: {fileID: 388067587}
+  followOffset: {x: 12.37, y: 7.6}
   rb: {fileID: 950445899}
-  speed: 2
-  minBondarys: {x: -1, y: -1}
-  maxBondarys: {x: 1, y: 1}
+  speed: 80
+  cameraDistanceFactor: 0.16
 --- !u!1 &198238677
 GameObject:
   m_ObjectHideFlags: 0
