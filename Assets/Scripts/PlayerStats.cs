@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    [Header("HUD")]
     public Image healhBar;
     public Image whiteHealthBar;
     public ManagerScript gameManager;
 
+    [Header("Life")]
     private float maxLife = 100f;
     public float life;
 
     public float fillSpeed = 1f;
+
+    [Header("Melee")]
+    public float meleeDamage = 1f;
+    public float attackRate = 1f;
 
     // Start is called before the first frame update
     void Start()
