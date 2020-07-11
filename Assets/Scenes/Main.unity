@@ -5069,7 +5069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6153016923104347356}
   m_Layer: 8
-  m_Name: bone_left
+  m_Name: bone_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5085,7 +5085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3863679740334967323}
   m_Layer: 8
-  m_Name: bone_right
+  m_Name: bone_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
