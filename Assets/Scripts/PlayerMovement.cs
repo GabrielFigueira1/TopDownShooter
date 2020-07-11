@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateSprintButton()
     {
-        if(Input.GetButton("Jump"))
+        if(Input.GetButton("Run"))
             sprintMultiplier = defaultSprintMultiplier;
     
         else
