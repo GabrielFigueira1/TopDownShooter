@@ -195,26 +195,26 @@ public class ZombieAi : MonoBehaviour
         {
             if (raySolid1.transform != null && raySolid1.transform.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Play");
+
                 return true;
             }
             if (raySolid2.transform != null && raySolid2.transform.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Play");
+
                 return true;
             }
             if (raySolid3.transform != null && raySolid3.transform.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Play");
+
                 return true;
             }
             else
-                Debug.Log("No muro");
-            return false;
+
+                return false;
         }
         else
         {
-            Debug.Log("NHA");
+
             return false;
         }
     }

@@ -15,9 +15,27 @@ public class PlayerFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
+        HandleFire();
+        HandleMelee();
+    }
+
+    // Metodo de atirar do player
+    private void HandleFire()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
             Instantiate(Bullet, firePosition.position, firePosition.rotation);
             playerAnimation.Play("Base Layer.Fire");
         }
     }
+
+    // Metodo de ataque melee do player
+    private void HandleMelee()
+    {
+        if(Input.GetMouseButtonDown(1)){
+            playerAnimation.Play("Base Layer.Melee");
+            Debug.Log("melee");
+        }
+    }
+
 }
