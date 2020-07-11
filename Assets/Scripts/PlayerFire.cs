@@ -21,6 +21,7 @@ public class PlayerFire : MonoBehaviour
     private LayerMask enemyLayer = 1 << 9;
     [Header ("References")]
     public PlayerStats playerStats;
+    public Transform playerPivot;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +58,14 @@ public class PlayerFire : MonoBehaviour
             // Repele os inimigos e aplica dano a eles
             foreach (Collider2D enemy in hit)
             {
-                enemy.GetComponent<EnemyStats>().DoDamage(playerStats.meleeDamage);
+                enemy.GetComponent<EnemyStats>().DoDamage(playerStats.meleeDamage); // aplica dano
+                var enemyTransform = enemy.GetComponent<Transform>();
+                var enemyRb =enemy.GetComponent<Rigidbody2D>();
+
+                Vector2 repelDirection = enemyTransform.position - playerPivot.position ; // calcula a direcao que o inimigo vai ser repelido 
+                repelDirection.Normalize();
+
+                enemyRb.AddForce(repelDirection * playerStats.repelForce, ForceMode2D.Impulse);
             }
             // Atualiza o timer do attackRate 
                 meleeAttackTime = Time.time;

@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Melee")]
     public float meleeDamage = 1f;
     public float attackRate = 1f;
+    public float repelForce;
 
     // Start is called before the first frame update
     void Start()

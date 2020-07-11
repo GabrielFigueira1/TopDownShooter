@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 18525297}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 198238678}
   - component: {fileID: 198238679}
   - component: {fileID: 198238680}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1512,6 +1512,7 @@ Transform:
   m_Children:
   - {fileID: 959301656}
   - {fileID: 5906696505767311238}
+  - {fileID: 1566363321}
   m_Father: {fileID: 950445896}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1525,7 +1526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 646436740}
   - component: {fileID: 646436741}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthBarBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1749,7 +1750,7 @@ GameObject:
   - component: {fileID: 895710344}
   - component: {fileID: 895710346}
   - component: {fileID: 895710342}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZombieHandler
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1955,6 +1956,10 @@ MonoBehaviour:
   firePosition: {fileID: 959301656}
   Bullet: {fileID: 1759070156479413953, guid: 36c2612594fb9c24b997f557c970a883, type: 3}
   playerAnimation: {fileID: 1363173983}
+  meleePoint: {fileID: 1566363321}
+  meleeRadius: 0.78
+  playerStats: {fileID: 950445901}
+  playerPivot: {fileID: 388067587}
 --- !u!114 &950445901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,6 +1977,9 @@ MonoBehaviour:
   gameManager: {fileID: 1286609747}
   life: 100
   fillSpeed: 0.4
+  meleeDamage: 2
+  attackRate: 0.6
+  repelForce: 125
 --- !u!1 &959301655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,7 +2400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1466985209}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZombiePivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2430,6 +2438,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -5941273336952127673, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -5320117567768522344, guid: 20a557eedfeafc7449e878e0137301fc,
         type: 3}
       propertyPath: m_SortingOrder
@@ -2439,6 +2452,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: zombie2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4798757406164138378, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4061349205786486029, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -2789392432178261668, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -2193985008186643699, guid: 20a557eedfeafc7449e878e0137301fc,
         type: 3}
@@ -2550,6 +2578,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.38577044
       objectReference: {fileID: 0}
+    - target: {fileID: 2080445854907962263, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221367908736951668, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3261681161985600161, guid: 20a557eedfeafc7449e878e0137301fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2615,6 +2653,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4126296887665268324, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086004833787468010, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5258409479055618836, guid: 20a557eedfeafc7449e878e0137301fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7342252288920989461, guid: 20a557eedfeafc7449e878e0137301fc,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -2653,6 +2706,36 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: -1294124808091435989, guid: 20a557eedfeafc7449e878e0137301fc,
     type: 3}
+--- !u!1 &1566363320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1566363321}
+  m_Layer: 8
+  m_Name: MeleePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1566363321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566363320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.54, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 388067587}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1658676422
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,7 +2828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1674311721}
   - component: {fileID: 1674311722}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HeathBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2826,7 +2909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1778064146}
   - component: {fileID: 1778064147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthBarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4914,7 +4997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1994394625}
   - component: {fileID: 1994394626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthBarWhiteFilling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5240,8 +5323,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 6153016923104347356}
   m_Bounds:
-    m_Center: {x: -0.056659415, y: -0.011864722, z: 0}
-    m_Extent: {x: 0.21631531, y: 0.24249604, z: 0}
+    m_Center: {x: -0.00000047683716, y: -0.009555548, z: 0}
+    m_Extent: {x: 0.22222222, y: 0.21266662, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!212 &3857064702314323645
@@ -5470,8 +5553,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 3863679740334967323}
   m_Bounds:
-    m_Center: {x: -0.018292367, y: 0.08595143, z: 0}
-    m_Extent: {x: 0.21786894, y: 0.23362687, z: 0}
+    m_Center: {x: 0.005608082, y: -0.012834683, z: 0}
+    m_Extent: {x: 0.22992983, y: 0.16515724, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!4 &7814829070358371047
@@ -5504,8 +5587,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 4063788632298983670}
   m_Bounds:
-    m_Center: {x: 0.012156412, y: 0.0313479, z: 0}
-    m_Extent: {x: 0.23917016, y: 0.43504694, z: 0}
+    m_Center: {x: 0, y: 0.013277799, z: 0}
+    m_Extent: {x: 0.22222222, y: 0.43116665, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &8194321277352751683
@@ -5629,7 +5712,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 5869287394017188919}
   m_Bounds:
-    m_Center: {x: -0.004696369, y: 0.055339605, z: 0}
-    m_Extent: {x: 0.23255882, y: 0.2134197, z: 0}
+    m_Center: {x: -0.00000047683716, y: -0.000000029802322, z: 0}
+    m_Extent: {x: 0.19444445, y: 0.16666667, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
