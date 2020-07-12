@@ -25,6 +25,8 @@ public class GunStats : MonoBehaviour
 
     public void Start(){
         UpdateUI();
+        ammoUI.ReloadBar(isReloading, 0, 1f);
+
     }
     private void Update()
     {
@@ -36,7 +38,7 @@ public class GunStats : MonoBehaviour
     public void SpendAmmo()
     {
         loadedAmmo -= 1;
-        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
+        ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
 
     }
 
@@ -55,6 +57,7 @@ public class GunStats : MonoBehaviour
         {
             isReloading = true;
             endReloadTime = Time.time + reloadTime;
+            ammoUI.ReloadBar(isReloading, reloadTime, Time.time);
         }
     }
     // Metodo
@@ -64,10 +67,13 @@ public class GunStats : MonoBehaviour
         {
             ReloadUpdate();
             isReloading = false;
+            ammoUI.ReloadBar(isReloading, 0, 1f);
+
         }
 
-        if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading)
+        if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading){
             canReload = true;
+            }
         else
             canReload = false;
 
@@ -94,7 +100,7 @@ public class GunStats : MonoBehaviour
                 extraAmmo = 0;
             }
         }
-        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
+        ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
 
     }
 
@@ -119,7 +125,7 @@ public class GunStats : MonoBehaviour
     }
 
     private void UpdateUI(){
-        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
+        ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
     }
 
 }
