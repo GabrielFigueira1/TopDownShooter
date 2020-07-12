@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFire : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     [Header("Fire and guns")]
     public Transform firePosition;
     public GameObject Bullet;
+    
+    public GunStats gunStats; // temporario
 
     [Header("Animations")]
     public Animator playerAnimation;
@@ -39,10 +41,16 @@ public class PlayerFire : MonoBehaviour
     // Metodo de atirar do player
     private void HandleFire()
     {
-        if (Input.GetMouseButtonDown(0)) //left button
+        // Se tem bala
+        if (Input.GetMouseButtonDown(0) && gunStats.loadedAmmo > 0) //left button
         {
+            gunStats.SpendAmmo();
             Instantiate(Bullet, firePosition.position, firePosition.rotation);
             playerAnimation.Play("Base Layer.Fire");
+        }
+        else if(gunStats.loadedAmmo == 0)// Sem municao
+        {
+            Debug.Log("Out of ammunition");
         }
     }
 
@@ -80,6 +88,7 @@ public class PlayerFire : MonoBehaviour
         else
             return false;
     }
+
 
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(meleePoint.position, meleeRadius);

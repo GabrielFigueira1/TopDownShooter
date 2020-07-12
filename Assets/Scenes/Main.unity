@@ -1263,8 +1263,9 @@ GameObject:
   m_Component:
   - component: {fileID: 297008797}
   - component: {fileID: 297008798}
+  - component: {fileID: 297008799}
   m_Layer: 8
-  m_Name: pistol23x7_1
+  m_Name: pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1335,6 +1336,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &297008799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297008796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb15df1fb6a81247a48792d5164f0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  fireRate: 0.5
+  isAutomatic: 0
+  maxAmmo: 7
+  maxExtraAmmo: 63
 --- !u!1 &312774722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,6 +1998,7 @@ MonoBehaviour:
   meleeDamage: 2
   attackRate: 0.6
   repelForce: 125
+  pistolAmmo: 0
 --- !u!1 &959301655
 GameObject:
   m_ObjectHideFlags: 0

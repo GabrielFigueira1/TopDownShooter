@@ -40,10 +40,11 @@
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\EnemyStats.cs" />
      <Compile Include="Assets\Scripts\GameManage.cs" />
+     <Compile Include="Assets\Scripts\GunStats.cs" />
      <Compile Include="Assets\Scripts\HealthBarEnemy.cs" />
      <Compile Include="Assets\Scripts\HealthBarEnemyFollow.cs" />
      <Compile Include="Assets\Scripts\ManagerScript.cs" />
-     <Compile Include="Assets\Scripts\PlayerFire.cs" />
+     <Compile Include="Assets\Scripts\PlayerCombat.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\ZombieAi.cs" />
