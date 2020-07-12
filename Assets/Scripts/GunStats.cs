@@ -27,7 +27,6 @@ public class GunStats : MonoBehaviour
     public void SpendAmmo()
     {
         loadedAmmo -= 1;
-        Debug.Log("Loaded ammo: " + loadedAmmo);
     }
     // Inicia o processo de reload
     public void Reload()
@@ -40,7 +39,6 @@ public class GunStats : MonoBehaviour
         else
         {
             isFullEmpty = true;
-            Debug.Log("Out of extra ammo");
         }
     }
     // Testa se o reload ja acabou
