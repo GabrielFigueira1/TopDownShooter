@@ -51,6 +51,7 @@ public class PlayerCombat : MonoBehaviour
         else if(gunStats.loadedAmmo == 0)// Sem municao
         {
             Debug.Log("Out of ammunition");
+            gunStats.Reload();
         }
     }
 

@@ -19,11 +19,21 @@ public class GunStats : MonoBehaviour
 // Consome municao
 public void SpendAmmo(){
     loadedAmmo -= 1;
-    Debug.Log(loadedAmmo);
+    Debug.Log("Loaded ammo: " + loadedAmmo);
 }
 // Recarrega a arma
 public void Reload(){
-    loadedAmmo = maxLoadedAmmo;
+    if (extraAmmo >= maxLoadedAmmo){    // testa se ha municao suficiente para um pente inteiro
+        loadedAmmo = maxLoadedAmmo;
+        extraAmmo -= loadedAmmo;
+    }
+    else if (extraAmmo > 0){            // testa se ha alguma municao no inventario
+        loadedAmmo = extraAmmo;
+        extraAmmo = 0;
+    }
+    else
+    {
+    }
 }
 // Verifica se a arma esta carregada
 public bool IsLoaded(){
