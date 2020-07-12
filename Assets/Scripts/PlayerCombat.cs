@@ -35,6 +35,7 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         HandleFire();
+        HandleReload();
         MeleeAtack();
     }
 
@@ -48,9 +49,15 @@ public class PlayerCombat : MonoBehaviour
             Instantiate(Bullet, firePosition.position, firePosition.rotation);
             playerAnimation.Play("Base Layer.Fire");
         }
-        else if(gunStats.loadedAmmo == 0 && !gunStats.isReloading)// Sem municao
-        {
+        else if(Input.GetMouseButtonDown(0) && gunStats.canReload)
+        { // Sem municao. Da o reload ao tentar atirar
             Debug.Log("Cabo municao");
+            gunStats.Reload();
+        }
+    }
+    // Metodo para recarregar apertando a letra r
+    private void HandleReload(){
+        if (Input.GetButtonDown("Reload") && gunStats.canReload){
             gunStats.Reload();
         }
     }

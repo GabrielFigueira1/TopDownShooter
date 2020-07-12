@@ -17,16 +17,27 @@ public class GunStats : MonoBehaviour
     [Header("Userfull")]
     public bool isReloading;
     public bool isFullEmpty;
+    public bool canReload;
+    public bool canShoot;
     private float endReloadTime;
 
     private void Update()
     {
         HandleReloadTime();
+        CheckBullets();
     }
     // Consome municao
     public void SpendAmmo()
     {
         loadedAmmo -= 1;
+    }
+    
+    // Verifica se ainda ha balas
+    private void CheckBullets(){
+        if (extraAmmo == 0 && loadedAmmo == 0)
+            isFullEmpty = true;
+        else
+            isFullEmpty = false;
     }
     // Inicia o processo de reload
     public void Reload()
@@ -36,34 +47,41 @@ public class GunStats : MonoBehaviour
             isReloading = true;
             endReloadTime = Time.time + reloadTime;
         }
-        else
-        {
-            isFullEmpty = true;
-        }
     }
-    // Testa se o reload ja acabou
+     // Metodo
     private void HandleReloadTime()
-    {
+    {   
         if (Time.time > endReloadTime && isReloading)
         {
             ReloadUpdate();
             isReloading = false;
         }
-        else
-            return;
+
+        if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading)
+            canReload = true;
+        else 
+            canReload = false;
+        
     }
     // Atualiza os valores de municao apos o reload
     private void ReloadUpdate()
     {
         if (extraAmmo >= maxLoadedAmmo)
         {   // testa se ha municao suficiente para um pente inteiro
+            extraAmmo -= maxLoadedAmmo - loadedAmmo;
             loadedAmmo = maxLoadedAmmo;
-            extraAmmo -= loadedAmmo;
+            
         }
         else if (extraAmmo > 0)
         {   // testa se ha alguma municao no inventario
-            loadedAmmo = extraAmmo;
-            extraAmmo = 0;
+            loadedAmmo += extraAmmo;
+            if (loadedAmmo > maxLoadedAmmo){
+                extraAmmo = loadedAmmo - maxLoadedAmmo;
+                loadedAmmo = maxLoadedAmmo;
+            }
+            else if (loadedAmmo <= maxLoadedAmmo){
+                extraAmmo = 0;
+            }
         }
         else
         {
