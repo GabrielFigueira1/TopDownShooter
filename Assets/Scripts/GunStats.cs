@@ -20,7 +20,12 @@ public class GunStats : MonoBehaviour
     public bool canReload;
     private float endReloadTime;
     public bool canShoot;
+    [Header("UI")]
+    public AmmoUI ammoUI;
 
+    public void Start(){
+        UpdateUI();
+    }
     private void Update()
     {
         HandleReloadTime();
@@ -31,6 +36,8 @@ public class GunStats : MonoBehaviour
     public void SpendAmmo()
     {
         loadedAmmo -= 1;
+        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
+
     }
 
     // Verifica se ainda ha balas
@@ -87,9 +94,8 @@ public class GunStats : MonoBehaviour
                 extraAmmo = 0;
             }
         }
-        else
-        {
-        }
+        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
+
     }
 
     // Verifica se a arma esta carregada
@@ -110,6 +116,10 @@ public class GunStats : MonoBehaviour
         }
         else
             canShoot = false;
+    }
+
+    private void UpdateUI(){
+        ammoUI.updateAmmoUI(loadedAmmo, extraAmmo);
     }
 
 }
