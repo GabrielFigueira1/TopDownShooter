@@ -1351,8 +1351,13 @@ MonoBehaviour:
   damage: 1
   fireRate: 0.5
   isAutomatic: 0
-  maxAmmo: 7
+  reloadTime: 2
+  maxLoadedAmmo: 7
   maxExtraAmmo: 63
+  loadedAmmo: 7
+  extraAmmo: 15
+  isReloading: 0
+  isFullEmpty: 0
 --- !u!1 &312774722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,6 +1978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePosition: {fileID: 959301656}
   Bullet: {fileID: 1759070156479413953, guid: 36c2612594fb9c24b997f557c970a883, type: 3}
+  gunStats: {fileID: 297008799}
   playerAnimation: {fileID: 1363173983}
   meleePoint: {fileID: 1566363321}
   meleeRadius: 0.78
@@ -1998,7 +2004,6 @@ MonoBehaviour:
   meleeDamage: 2
   attackRate: 0.6
   repelForce: 125
-  pistolAmmo: 0
 --- !u!1 &959301655
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,9 +48,9 @@ public class PlayerCombat : MonoBehaviour
             Instantiate(Bullet, firePosition.position, firePosition.rotation);
             playerAnimation.Play("Base Layer.Fire");
         }
-        else if(gunStats.loadedAmmo == 0)// Sem municao
+        else if(gunStats.loadedAmmo == 0 && !gunStats.isReloading)// Sem municao
         {
-            Debug.Log("Out of ammunition");
+            Debug.Log("Cabo municao");
             gunStats.Reload();
         }
     }
