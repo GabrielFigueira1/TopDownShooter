@@ -1355,9 +1355,11 @@ MonoBehaviour:
   maxLoadedAmmo: 7
   maxExtraAmmo: 63
   loadedAmmo: 7
-  extraAmmo: 15
+  extraAmmo: 9
   isReloading: 0
   isFullEmpty: 0
+  canReload: 0
+  canShoot: 0
 --- !u!1 &312774722
 GameObject:
   m_ObjectHideFlags: 0
