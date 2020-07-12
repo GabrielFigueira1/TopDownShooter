@@ -42,8 +42,8 @@ public class PlayerCombat : MonoBehaviour
     // Metodo de atirar do player
     private void HandleFire()
     {
-        // Se tem bala
-        if (Input.GetMouseButtonDown(0) && gunStats.loadedAmmo > 0) //left button
+        // Se pode atirar
+        if (Input.GetMouseButtonDown(0) && gunStats.canShoot) //left button
         {
             gunStats.SpendAmmo();
             Instantiate(Bullet, firePosition.position, firePosition.rotation);

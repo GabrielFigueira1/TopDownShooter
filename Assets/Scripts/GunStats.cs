@@ -18,12 +18,13 @@ public class GunStats : MonoBehaviour
     public bool isReloading;
     public bool isFullEmpty;
     public bool canReload;
-    public bool canShoot;
     private float endReloadTime;
+    public bool canShoot;
 
     private void Update()
     {
         HandleReloadTime();
+        HandleCanShoot();
         CheckBullets();
     }
     // Consome municao
@@ -31,9 +32,10 @@ public class GunStats : MonoBehaviour
     {
         loadedAmmo -= 1;
     }
-    
+
     // Verifica se ainda ha balas
-    private void CheckBullets(){
+    private void CheckBullets()
+    {
         if (extraAmmo == 0 && loadedAmmo == 0)
             isFullEmpty = true;
         else
@@ -48,9 +50,9 @@ public class GunStats : MonoBehaviour
             endReloadTime = Time.time + reloadTime;
         }
     }
-     // Metodo
+    // Metodo
     private void HandleReloadTime()
-    {   
+    {
         if (Time.time > endReloadTime && isReloading)
         {
             ReloadUpdate();
@@ -59,9 +61,9 @@ public class GunStats : MonoBehaviour
 
         if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading)
             canReload = true;
-        else 
+        else
             canReload = false;
-        
+
     }
     // Atualiza os valores de municao apos o reload
     private void ReloadUpdate()
@@ -70,16 +72,18 @@ public class GunStats : MonoBehaviour
         {   // testa se ha municao suficiente para um pente inteiro
             extraAmmo -= maxLoadedAmmo - loadedAmmo;
             loadedAmmo = maxLoadedAmmo;
-            
+
         }
         else if (extraAmmo > 0)
         {   // testa se ha alguma municao no inventario
             loadedAmmo += extraAmmo;
-            if (loadedAmmo > maxLoadedAmmo){
+            if (loadedAmmo > maxLoadedAmmo)
+            {
                 extraAmmo = loadedAmmo - maxLoadedAmmo;
                 loadedAmmo = maxLoadedAmmo;
             }
-            else if (loadedAmmo <= maxLoadedAmmo){
+            else if (loadedAmmo <= maxLoadedAmmo)
+            {
                 extraAmmo = 0;
             }
         }
@@ -97,6 +101,15 @@ public class GunStats : MonoBehaviour
         }
         else
             return false;
+    }
+    public void HandleCanShoot()
+    {
+        if (IsLoaded() && !isReloading)
+        {
+            canShoot = true;
+        }
+        else
+            canShoot = false;
     }
 
 }
