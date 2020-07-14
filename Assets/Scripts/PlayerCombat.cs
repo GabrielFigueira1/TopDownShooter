@@ -104,7 +104,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 if (hittedEnemys.Contains(enemy.GetHashCode()))
                 {
-                    return;
+                   
                 }
                 else
                 {
