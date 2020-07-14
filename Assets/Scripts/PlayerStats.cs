@@ -55,7 +55,8 @@ public class PlayerStats : MonoBehaviour
     {
         maxLife = newMaxLife;
     }
-    private void updateWhiteBar(){
+    private void updateWhiteBar()
+    {
         if (whiteHealthBar.fillAmount > healhBar.fillAmount)
         {
             whiteHealthBar.fillAmount -= Time.deltaTime * fillSpeed;

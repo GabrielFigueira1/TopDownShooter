@@ -2273,7 +2273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePosition: {fileID: 959301656}
-  Bullet: {fileID: 1759070156479413953, guid: 36c2612594fb9c24b997f557c970a883, type: 3}
+  Bullet: {fileID: 8191134464809056582, guid: 9d3878251150eaf47868382732e86c83, type: 3}
   weaponChange: {fileID: 1677370925}
   playerAnimation: {fileID: 1363173983}
   meleePoint: {fileID: 1566363321}

@@ -9,10 +9,8 @@ public class PlayerCombat : MonoBehaviour
     public GameObject Bullet;
     private int selectedWeapon;
 
-    private GunStats activeWeapon;
+    public static GunStats activeWeapon;
     public WeaponChangeHandler weaponChange;
-
-    private AmmoUI ammoUI;
 
     [Header("Animations")]
     public Animator playerAnimation;
