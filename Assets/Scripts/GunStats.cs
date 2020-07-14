@@ -23,7 +23,8 @@ public class GunStats : MonoBehaviour
     [Header("UI")]
     public AmmoUI ammoUI;
 
-    public void Start(){
+    public void Start()
+    {
         UpdateUI();
         ammoUI.ReloadBar(isReloading, 0, 1f);
 
@@ -71,9 +72,10 @@ public class GunStats : MonoBehaviour
 
         }
 
-        if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading){
+        if (loadedAmmo < maxLoadedAmmo && extraAmmo > 0 && !isReloading)
+        {
             canReload = true;
-            }
+        }
         else
             canReload = false;
 
@@ -124,8 +126,10 @@ public class GunStats : MonoBehaviour
             canShoot = false;
     }
 
-    private void UpdateUI(){
+    public void UpdateUI()
+    {
         ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
+        ammoUI.UpdateWeaponIcon();
     }
 
 }

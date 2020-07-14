@@ -7,12 +7,16 @@ public class PlayerCombat : MonoBehaviour
     [Header("Fire and guns")]
     public Transform firePosition;
     public GameObject Bullet;
-    
-    public GunStats gunStats; // temporario
+    private int selectedWeapon;
+
+    private GunStats activeWeapon;
+    public WeaponChangeHandler weaponChange;
+
+    private AmmoUI ammoUI;
 
     [Header("Animations")]
     public Animator playerAnimation;
-    
+
     [Header("Melee")]
     public Transform meleePoint;
 
@@ -21,14 +25,17 @@ public class PlayerCombat : MonoBehaviour
     private float meleeAttackTime = 0f;
 
     private LayerMask enemyLayer = 1 << 9;
-    [Header ("References")]
+    [Header("References")]
     public PlayerStats playerStats;
     public Transform playerPivot;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        SetupInitialWeapon();
+        UpdateAmmoUI();
     }
 
     // Update is called once per frame
@@ -42,30 +49,39 @@ public class PlayerCombat : MonoBehaviour
     // Metodo de atirar do player
     private void HandleFire()
     {
-        // Se pode atirar
-        if (Input.GetMouseButtonDown(0) && gunStats.canShoot) //left button
+        // Pega a referencia da arma selecionada
+        if (selectedWeapon != weaponChange.selectedWeapon)
         {
-            gunStats.SpendAmmo();
+            selectedWeapon = weaponChange.selectedWeapon;
+            activeWeapon = weaponChange.selectedWeaponReference;
+            UpdateAmmoUI();
+        }
+        // Se pode atirar
+        if (Input.GetMouseButtonDown(0) && activeWeapon.canShoot) //left button
+        {
+            activeWeapon.SpendAmmo();
             Instantiate(Bullet, firePosition.position, firePosition.rotation);
             playerAnimation.Play("Base Layer.Fire");
         }
-        else if(Input.GetMouseButtonDown(0) && gunStats.canReload)
+        else if (Input.GetMouseButtonDown(0) && activeWeapon.canReload)
         { // Sem municao. Da o reload ao tentar atirar
-            Debug.Log("Cabo municao");
-            gunStats.Reload();
+            activeWeapon.Reload();
         }
     }
     // Metodo para recarregar apertando a letra r
-    private void HandleReload(){
-        if (Input.GetButtonDown("Reload") && gunStats.canReload){
-            gunStats.Reload();
+    private void HandleReload()
+    {
+        if (Input.GetButtonDown("Reload") && activeWeapon.canReload)
+        {
+            activeWeapon.Reload();
         }
     }
 
     // Metodo de ataque melee do player
     private void MeleeAtack()
     {
-        if(Input.GetMouseButtonDown(1) && CanMeleeAtack()){ //right button
+        if (Input.GetMouseButtonDown(1) && CanMeleeAtack())
+        { //right button
             // Animacao de ataque melee
             playerAnimation.Play("Base Layer.Melee");
 
@@ -76,30 +92,41 @@ public class PlayerCombat : MonoBehaviour
             {
                 enemy.GetComponent<EnemyStats>().DoDamage(playerStats.meleeDamage); // aplica dano
                 var enemyTransform = enemy.GetComponent<Transform>();
-                var enemyRb =enemy.GetComponent<Rigidbody2D>();
+                var enemyRb = enemy.GetComponent<Rigidbody2D>();
 
-                Vector2 repelDirection = enemyTransform.position - playerPivot.position ; // calcula a direcao que o inimigo vai ser repelido 
+                Vector2 repelDirection = enemyTransform.position - playerPivot.position; // calcula a direcao que o inimigo vai ser repelido 
                 repelDirection.Normalize();
 
                 enemyRb.AddForce(repelDirection * playerStats.repelForce, ForceMode2D.Impulse);
             }
             // Atualiza o timer do attackRate 
-                meleeAttackTime = Time.time;
+            meleeAttackTime = Time.time;
 
         }
     }
 
-    private bool CanMeleeAtack(){
-        if(meleeAttackTime + playerStats.attackRate < Time.time || meleeAttackTime == 0f){
+    private bool CanMeleeAtack()
+    {
+        if (meleeAttackTime + playerStats.attackRate < Time.time || meleeAttackTime == 0f)
+        {
             return true;
         }
         else
             return false;
     }
 
-
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireSphere(meleePoint.position, meleeRadius);
+    private void SetupInitialWeapon()
+    {
+        selectedWeapon = weaponChange.selectedWeapon;
+        activeWeapon = weaponChange.selectedWeaponReference;
     }
 
+    private void UpdateAmmoUI()
+    {
+        activeWeapon.UpdateUI();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(meleePoint.position, meleeRadius);
+    }
 }
