@@ -66,13 +66,6 @@ public class ZombieAi : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            //StopCoroutine("DamagePlayer");
-        }
-    }
     /*Corrotina de dano do zumbi aplicado no player*/
     IEnumerator DamagePlayer(PlayerStats playerStats)
     {
@@ -99,7 +92,10 @@ public class ZombieAi : MonoBehaviour
     }
     private void Move()
     {
-        rb.velocity = playerDirection * speed;
+        rb.AddForce(playerDirection * speed);
+    }
+    private void MovoWhileAtack(){
+
     }
     private void RotateToPlayer()
     {

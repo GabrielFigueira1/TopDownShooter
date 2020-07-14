@@ -2089,7 +2089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bar: {fileID: 198238680}
-  enemyDamage: 20
+  enemyDamage: 1
 --- !u!4 &895710343
 Transform:
   m_ObjectHideFlags: 0
@@ -2115,7 +2115,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 895710341}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8c1d74e4f36306b418ab0b648902c85d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2161,9 +2161,9 @@ MonoBehaviour:
   zombieAnimations: {fileID: 1972973876}
   enemyStats: {fileID: 895710342}
   playerObject: {fileID: 950445895}
-  speed: 1.52
-  sightRaycastOffset: 0.4
-  sightRange: 5
+  speed: 100
+  sightRaycastOffset: 0.35
+  sightRange: 7
   maxPounceRange: 2.71
   minPounceRange: 1.04
   pounceForce: 170
@@ -2232,7 +2232,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 950445895}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8c1d74e4f36306b418ab0b648902c85d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0

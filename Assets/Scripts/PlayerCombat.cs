@@ -116,7 +116,6 @@ public class PlayerCombat : MonoBehaviour
                     repelDirection.Normalize();
 
                     enemyRb.AddForce(repelDirection * playerStats.repelForce, ForceMode2D.Impulse);
-
                     hittedEnemys.Add(enemy.GetHashCode());
                 }
             }
