@@ -21,13 +21,15 @@ public class PlayerCombat : MonoBehaviour
     public float meleeRadius;
 
     private float meleeAttackTime = 0f;
+    public bool isOnMeleeAtack;
+    [SerializeField] private float meleeAttackDuration = 0.5f;
 
     private LayerMask enemyLayer = 1 << 9;
     [Header("References")]
     public PlayerStats playerStats;
     public Transform playerPivot;
 
-
+    private List<int> hittedEnemys = new List<int>();
 
     // Start is called before the first frame update
     void Start()
@@ -50,16 +52,18 @@ public class PlayerCombat : MonoBehaviour
         // Pega a referencia da arma selecionada
         if (selectedWeapon != weaponChange.selectedWeapon)
         {
-            selectedWeapon = weaponChange.selectedWeapon;
-            activeWeapon = weaponChange.selectedWeaponReference;
+            activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+            selectedWeapon = weaponChange.selectedWeapon; // pega o numero referencia da arma selecionada
+            activeWeapon = weaponChange.selectedWeaponReference; // pega a referencia da arma selecionada
             UpdateAmmoUI();
         }
         // Se pode atirar
         if (Input.GetMouseButtonDown(0) && activeWeapon.canShoot) //left button
         {
-            activeWeapon.SpendAmmo();
-            Instantiate(Bullet, firePosition.position, firePosition.rotation);
-            playerAnimation.Play("Base Layer.Fire");
+            activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+            activeWeapon.SpendAmmo(); // gasta municao
+            Instantiate(Bullet, firePosition.position, firePosition.rotation); // instancia um objeto bullet
+            playerAnimation.Play("Base Layer.Fire"); // executa animacao de tiro do player
         }
         else if (Input.GetMouseButtonDown(0) && activeWeapon.canReload)
         { // Sem municao. Da o reload ao tentar atirar
@@ -78,28 +82,49 @@ public class PlayerCombat : MonoBehaviour
     // Metodo de ataque melee do player
     private void MeleeAtack()
     {
+        HandleMelee();
         if (Input.GetMouseButtonDown(1) && CanMeleeAtack())
         { //right button
+            isOnMeleeAtack = true;
+            activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
             // Animacao de ataque melee
             playerAnimation.Play("Base Layer.Melee");
+            // Atualiza o timer do attackRate 
+            meleeAttackTime = Time.time;
 
-            // Detecta hits em inmigos
+        }
+    }
+    private void HandleMelee()
+    {
+        if (isOnMeleeAtack)
+        {
             Collider2D[] hit = Physics2D.OverlapCircleAll(meleePoint.position, meleeRadius, enemyLayer);
             // Repele os inimigos e aplica dano a eles
             foreach (Collider2D enemy in hit)
             {
-                enemy.GetComponent<EnemyStats>().DoDamage(playerStats.meleeDamage); // aplica dano
-                var enemyTransform = enemy.GetComponent<Transform>();
-                var enemyRb = enemy.GetComponent<Rigidbody2D>();
+                if (hittedEnemys.Contains(enemy.GetHashCode()))
+                {
+                    return;
+                }
+                else
+                {
+                    enemy.GetComponent<EnemyStats>().DoDamage(playerStats.meleeDamage); // aplica dano
+                    var enemyTransform = enemy.GetComponent<Transform>();
+                    var enemyRb = enemy.GetComponent<Rigidbody2D>();
 
-                Vector2 repelDirection = enemyTransform.position - playerPivot.position; // calcula a direcao que o inimigo vai ser repelido 
-                repelDirection.Normalize();
+                    Vector2 repelDirection = enemyTransform.position - playerPivot.position; // calcula a direcao que o inimigo vai ser repelido 
+                    repelDirection.Normalize();
 
-                enemyRb.AddForce(repelDirection * playerStats.repelForce, ForceMode2D.Impulse);
+                    enemyRb.AddForce(repelDirection * playerStats.repelForce, ForceMode2D.Impulse);
+
+                    hittedEnemys.Add(enemy.GetHashCode());
+                }
             }
-            // Atualiza o timer do attackRate 
-            meleeAttackTime = Time.time;
-
+            if (meleeAttackDuration + meleeAttackTime < Time.time)
+            {
+                isOnMeleeAtack = false;
+                hittedEnemys.Clear();
+            }
         }
     }
 
@@ -118,7 +143,9 @@ public class PlayerCombat : MonoBehaviour
         selectedWeapon = weaponChange.selectedWeapon;
         activeWeapon = weaponChange.selectedWeaponReference;
     }
-
+    /// <summary>
+    /// Atualiza os valores da municao e icone da arma na UI
+    /// </summary>
     private void UpdateAmmoUI()
     {
         activeWeapon.UpdateUI();

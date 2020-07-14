@@ -35,15 +35,18 @@ public class GunStats : MonoBehaviour
         HandleCanShoot();
         CheckBullets();
     }
-    // Consome municao
+    /// <summary>
+    /// Consome uma municao e atualiza o valor na UI
+    /// </summary>
     public void SpendAmmo()
     {
         loadedAmmo -= 1;
         ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
 
     }
-
-    // Verifica se ainda ha balas
+    /// <summary>
+    /// Verifica se ainda ha balas
+    /// </summary>
     private void CheckBullets()
     {
         if (extraAmmo == 0 && loadedAmmo == 0)
@@ -51,7 +54,9 @@ public class GunStats : MonoBehaviour
         else
             isFullEmpty = false;
     }
-    // Inicia o processo de reload
+    /// <summary>
+    /// Inicia o processo de reload
+    /// </summary>
     public void Reload()
     {
         if (extraAmmo > 0)
@@ -105,8 +110,17 @@ public class GunStats : MonoBehaviour
         ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
 
     }
+    /// <summary>
+    /// Cancela um reload ocorrendo
+    /// </summary>
+    public void cancelReload(){
+        isReloading = false;
+        ammoUI.ReloadBar(isReloading, 0, 1f);
+    }
 
-    // Verifica se a arma esta carregada
+    /// <summary>
+    /// Verifica se a arma esta carregada
+    /// </summary>
     public bool IsLoaded()
     {
         if (loadedAmmo > 0)
@@ -125,7 +139,9 @@ public class GunStats : MonoBehaviour
         else
             canShoot = false;
     }
-
+    /// <summary>
+    /// Atualiza os valores da municao e icone da arma na UI
+    /// </summary>
     public void UpdateUI()
     {
         ammoUI.UpdateAmmoUI(loadedAmmo, extraAmmo);
