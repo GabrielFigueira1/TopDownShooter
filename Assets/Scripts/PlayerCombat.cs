@@ -53,6 +53,7 @@ public class PlayerCombat : MonoBehaviour
         if (selectedWeapon != weaponChange.selectedWeapon)
         {
             activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+            cancelMeleeAttack(); // cancela um ataque melee
             selectedWeapon = weaponChange.selectedWeapon; // pega o numero referencia da arma selecionada
             activeWeapon = weaponChange.selectedWeaponReference; // pega a referencia da arma selecionada
             UpdateAmmoUI();
@@ -61,6 +62,7 @@ public class PlayerCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && activeWeapon.canShoot) //left button
         {
             activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+            cancelMeleeAttack(); // cancela um ataque melee
             activeWeapon.SpendAmmo(); // gasta municao
             Instantiate(Bullet, firePosition.position, firePosition.rotation); // instancia um objeto bullet
             playerAnimation.Play("Base Layer.Fire"); // executa animacao de tiro do player
@@ -75,6 +77,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Input.GetButtonDown("Reload") && activeWeapon.canReload)
         {
+            cancelMeleeAttack();
             activeWeapon.Reload();
         }
     }
@@ -135,6 +138,10 @@ public class PlayerCombat : MonoBehaviour
         }
         else
             return false;
+    }
+    public void cancelMeleeAttack(){
+        isOnMeleeAtack = false;
+        hittedEnemys.Clear();
     }
 
     private void SetupInitialWeapon()
