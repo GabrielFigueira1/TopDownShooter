@@ -1429,7 +1429,7 @@ MonoBehaviour:
   maxLoadedAmmo: 7
   maxExtraAmmo: 63
   loadedAmmo: 7
-  extraAmmo: 35
+  extraAmmo: 350
   isReloading: 0
   isFullEmpty: 0
   canReload: 0
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   maxLoadedAmmo: 30
   maxExtraAmmo: 90
   loadedAmmo: 30
-  extraAmmo: 70
+  extraAmmo: 707
   isReloading: 0
   isFullEmpty: 0
   canReload: 0
@@ -2197,7 +2197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950445895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.43, y: -0.13, z: 0}
+  m_LocalPosition: {x: -7.4, y: -0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 388067587}
@@ -6077,7 +6077,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 6153016923104347356}
   m_Bounds:
-    m_Center: {x: -0.00000047683716, y: -0.009555548, z: 0}
+    m_Center: {x: 0, y: -0.009555548, z: 0}
     m_Extent: {x: 0.22222222, y: 0.21266662, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -6466,7 +6466,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 5869287394017188919}
   m_Bounds:
-    m_Center: {x: -0.00000047683716, y: -0.000000029802322, z: 0}
+    m_Center: {x: 0, y: -0.000000029802322, z: 0}
     m_Extent: {x: 0.19444445, y: 0.16666667, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
