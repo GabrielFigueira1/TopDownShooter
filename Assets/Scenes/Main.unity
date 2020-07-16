@@ -2162,12 +2162,21 @@ MonoBehaviour:
   enemyStats: {fileID: 895710342}
   playerObject: {fileID: 950445895}
   speed: 100
+  idleWalkSpeed: 20
+  randomAngle: 0
+  frontCollisionRay: 0.8
+  lerpingIdleSpeed: 1.5
   sightRaycastOffset: 0.35
   sightRange: 7
-  maxPounceRange: 2.71
-  minPounceRange: 1.04
+  maxTestRange: 2.87
+  minTestRange: 1.66
   pounceForce: 170
-  pounceTime: 0.8
+  pounceDuration: 1
+  attackRange: 1
+  actualState: 0
+  nextTestTime: 0
+  maxRandomTimeBetweenTests: 10
+  minRandomTimeBetweenTests: 5
 --- !u!1 &950445895
 GameObject:
   m_ObjectHideFlags: 0
