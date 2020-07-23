@@ -278,10 +278,9 @@ public class ZombieAi : MonoBehaviour
         return false;
     }
     private void Idle(){
-        Debug.Log("IDLE");
     }
     private void Chase(){
-        Debug.Log("CHASE");
+        zombieAnimations.SetBool("isWalking", true);
     }
     ///<summary>
     ///Testa se o zombie vai dar um bote ou perseguir
@@ -297,7 +296,6 @@ public class ZombieAi : MonoBehaviour
     private void Pounce()
     {
         isPouncing = true;
-        Debug.Log("POUNCE");
     }
     private void PouncePhysics(){
         if (isPouncing == true)
@@ -311,28 +309,29 @@ public class ZombieAi : MonoBehaviour
                 pounceEndTime = Time.time + pounceDuration;
                 rb.AddForce(pivot.transform.right * pounceForce, ForceMode2D.Impulse);
                 rb.angularVelocity = 0f;
-                zombieAnimations.Play("Base Layer.hit_zombie");
+                zombieAnimations.Play("Base Layer.pounce_zombie");
                 alreadyPounced = true;
             }
 
             else if (Time.time > pounceEndTime)
             {
                 isPouncing = false;
+                zombieAnimations.SetBool("isPouncing", false);
             }
         }
     }
     private void Attack(){
         if (nextAttackTime < Time.time){
             attackTimer = 0f;
-            Debug.Log("ATTACK");
             nextAttackTime = Time.time + attackRate;
             isAttacking = true;
             canDamage = true;
             zombieAnimations.Play("Base Layer.hitting_zombie");
+            zombieAnimations.SetBool("isHitting", true);
+
         }
         if(isAttacking){
             Collider2D hit = Physics2D.OverlapCircle((pivot.position + (pivot.right * attackOffset)), attackRadius, layerPlayer);
-            zombieAnimations.SetBool("isHitting", true);
             if (hit && canDamage){
                 var playerStats = hit.gameObject.GetComponent<PlayerStats>();
                 playerStats.DoDamage(enemyStats.enemyDamage);
@@ -345,7 +344,6 @@ public class ZombieAi : MonoBehaviour
         }
         else{
             canDamage = true;
-            zombieAnimations.SetBool("isHitting", false);
         }
     }
     //Freeze para previnir bugs na tela de game over
@@ -365,6 +363,7 @@ public class ZombieAi : MonoBehaviour
         switch (actualState)
         {
             case (int)state.idle:
+                zombieAnimations.SetBool("isWalking", false);
                 if (PlayerDetected())
                 {
                     actualState = (int)state.chase;
@@ -403,6 +402,7 @@ public class ZombieAi : MonoBehaviour
                 }
                 break;
             case (int)state.pounce:
+                zombieAnimations.SetBool("isWalking", false);
                 if (!isPouncing && !alreadyPounced)
                 {
                     pounceTimer =Time.time + pounceDelay;
@@ -414,13 +414,14 @@ public class ZombieAi : MonoBehaviour
                     actualState = (int)state.chase;
                 break;
             case (int)state.attack:
+                zombieAnimations.SetBool("isWalking", false);
                 if (!IsOnAttackRange())
                 {
                     actualState = (int)state.chase;
                     zombieAnimations.SetBool("isHitting", false);
                 }
-                else                {
-                    Invoke("Attack", 0.1f);
+                else{
+                    Attack();
                 }
                 break;
         }
