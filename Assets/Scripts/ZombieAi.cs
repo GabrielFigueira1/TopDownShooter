@@ -60,7 +60,9 @@ public class ZombieAi : MonoBehaviour
     public float minTestRange = 2f;
     public float pounceForce = 3f;
     public float pounceDuration = 1f;
+    public float pounceDelay;
     private float pounceEndTime ;
+    private float pounceTimer;
     private bool isPouncing = false;
     [Header("Attack Parameters")]
     public float attackRadius = 1f;
@@ -298,15 +300,23 @@ public class ZombieAi : MonoBehaviour
         Debug.Log("POUNCE");
     }
     private void PouncePhysics(){
-        if(isPouncing == true){
-            if(!alreadyPounced){
+        if (isPouncing == true)
+        {
+            if (pounceTimer > Time.time)
+            { 
+                return;
+            }
+            else if (!alreadyPounced)
+            {
                 pounceEndTime = Time.time + pounceDuration;
-                rb.AddForce(playerDirection.normalized * pounceForce, ForceMode2D.Impulse);
+                rb.AddForce(pivot.transform.right * pounceForce, ForceMode2D.Impulse);
                 rb.angularVelocity = 0f;
                 zombieAnimations.Play("Base Layer.hit_zombie");
                 alreadyPounced = true;
             }
-            if(Time.time > pounceEndTime){
+
+            else if (Time.time > pounceEndTime)
+            {
                 isPouncing = false;
             }
         }
@@ -395,6 +405,7 @@ public class ZombieAi : MonoBehaviour
             case (int)state.pounce:
                 if (!isPouncing && !alreadyPounced)
                 {
+                    pounceTimer =Time.time + pounceDelay;
                     Pounce();
                 }
                 else if(IsAbleToTest() && alreadyPounced)

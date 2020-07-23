@@ -2170,8 +2170,9 @@ MonoBehaviour:
   sightRange: 7
   maxTestRange: 2.87
   minTestRange: 1.66
-  pounceForce: 170
-  pounceDuration: 1
+  pounceForce: 120
+  pounceDuration: 2
+  pounceDelay: 1
   attackRadius: 0.42
   attackOffset: 0.34
   attackRate: 1
