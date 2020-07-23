@@ -1338,7 +1338,7 @@ GameObject:
   - component: {fileID: 297008797}
   - component: {fileID: 297008798}
   - component: {fileID: 297008799}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1629,7 +1629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388067587}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: PlayerPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1893,7 +1893,7 @@ GameObject:
   - component: {fileID: 734179444}
   - component: {fileID: 734179446}
   - component: {fileID: 734179445}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2172,6 +2172,9 @@ MonoBehaviour:
   minTestRange: 1.66
   pounceForce: 170
   pounceDuration: 1
+  attackRadius: 0.42
+  attackOffset: 0.34
+  attackRate: 1
   attackRange: 1
   actualState: 0
   nextTestTime: 0
@@ -2191,7 +2194,7 @@ GameObject:
   - component: {fileID: 950445897}
   - component: {fileID: 950445900}
   - component: {fileID: 950445901}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2320,7 +2323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 959301656}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: FirePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3433,7 +3436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1566363321}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: MeleePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3464,7 +3467,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1658676423}
   - component: {fileID: 1658676424}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3627,7 +3630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1677370924}
   - component: {fileID: 1677370925}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5916,7 +5919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6153016923104347356}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: bone_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5932,7 +5935,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3863679740334967323}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: bone_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5950,7 +5953,7 @@ GameObject:
   - component: {fileID: 1687451974543690400}
   - component: {fileID: 4449351797779436485}
   - component: {fileID: 3803687612622539412}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: leftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5982,7 +5985,7 @@ GameObject:
   - component: {fileID: 6441488917948895795}
   - component: {fileID: 3857064702314323645}
   - component: {fileID: 8958755847506879215}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5998,7 +6001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5869287394017188919}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: bone_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6065,7 +6068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4063788632298983670}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: bone_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6367,7 +6370,7 @@ GameObject:
   - component: {fileID: 5906696505767311238}
   - component: {fileID: 1363173982}
   - component: {fileID: 1363173983}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6385,7 +6388,7 @@ GameObject:
   - component: {fileID: 6168545279437889865}
   - component: {fileID: 8579201477069135383}
   - component: {fileID: 7869150782101278235}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6454,7 +6457,7 @@ GameObject:
   - component: {fileID: 7814829070358371047}
   - component: {fileID: 2489221170158055238}
   - component: {fileID: 7066704025409388338}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: rightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

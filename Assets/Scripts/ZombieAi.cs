@@ -63,16 +63,25 @@ public class ZombieAi : MonoBehaviour
     private float pounceEndTime ;
     private bool isPouncing = false;
     [Header("Attack Parameters")]
+    public float attackRadius = 1f;
+    public float attackOffset = 1f;
+    public float attackRate = 1f;
     public float attackRange = 1f;
+    private float nextAttackTime;
+    private bool isAttacking;
+    private float attackTimer;
     private int testResult;
 
-    private int layerSolid = 1 << 8; //layer 8 solid
+    private int layerSolid = 1 << 8 | 1 << 10; //layer 8 solid e player
+    private int layerPlayer = 1 << 10; // layer 10 player
 
     [SerializeField]private int actualState;
     [SerializeField]private float nextTestTime;
     [SerializeField]private float maxRandomTimeBetweenTests = 2f;
     [SerializeField]private float minRandomTimeBetweenTests = 1f;
     private bool alreadyPounced;
+
+    
 
 
     void Awake() {
@@ -88,37 +97,9 @@ public class ZombieAi : MonoBehaviour
         PouncePhysics();
         ChasePhysics();
     }
-
-    /*Colisao que inicia uma corrotina de dano no player se o zumbi colidir com ele*/
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            if (canDamage)
-            {
-                var playerStats = other.gameObject.GetComponent<PlayerStats>();
-                StartCoroutine("DamagePlayer", playerStats);
-            }
-        }
+    void des(){
+        Destroy(gameObject);
     }
-
-    /*Corrotina de dano do zumbi aplicado no player*/
-    IEnumerator DamagePlayer(PlayerStats playerStats)
-    {
-        zombieAnimations.Play("Base Layer.hitting_zombie");
-        zombieAnimations.SetBool("isHitting", true);
-        int i;
-        playerStats.DoDamage(enemyStats.enemyDamage);
-        canDamage = false;
-        for (i = 0; i < 5; i++)
-        {
-            yield return new WaitForSeconds(0.02f);
-        }
-        yield return new WaitForSeconds(0.8f);
-        zombieAnimations.SetBool("isHitting", false);
-        canDamage = true;
-    }
-
     //Metodos de movimento
     private void GetPlayerDirection()
     //Faz o zombie andar na direção do player
@@ -135,7 +116,7 @@ public class ZombieAi : MonoBehaviour
     //Faz o zombie girar na direção do player
     private void RotateToPlayer()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, angleToPlayer);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, angleToPlayer), 6f*Time.fixedDeltaTime) ;
     }
     private void UpdateRandomAngle(){
         randomAngle = Random.Range(0f, 360f);
@@ -152,14 +133,17 @@ public class ZombieAi : MonoBehaviour
         }
     }
     private void IdlePhysics(){
-        LerpTolerpAmount();
-        if (!isLerping){
-            rb.AddRelativeForce(Vector2.right * idleWalkSpeed);
-            RaycastHit2D ray = Physics2D.Raycast(pivot.position, pivot.transform.TransformDirection(Vector2.right), frontCollisionRay, layerSolid);
-            if (ray && !isLerping)
+        if(actualState == (int)state.idle){
+            LerpTolerpAmount();
+            if (!isLerping)
             {
-                lerpAmount = Random.Range(0.7f, 1.5f) * Random.Range(-1, 2);
-                isLerping = true;
+                rb.AddRelativeForce(Vector2.right * idleWalkSpeed);
+                RaycastHit2D ray = Physics2D.Raycast(pivot.position, pivot.transform.TransformDirection(Vector2.right), frontCollisionRay, layerSolid);
+                if (ray && !isLerping)
+                {
+                    lerpAmount = Random.Range(0.7f, 1.5f) * Random.Range(-1, 2);
+                    isLerping = true;
+                }
             }
         }
     }
@@ -182,35 +166,6 @@ public class ZombieAi : MonoBehaviour
         else
             zombieAnimations.SetBool("isWalking", false);
     }
-
-    /*Metodos de IA*/
-   /*
-   private void Patrol()
-    {
-        if (isOnLineOfSight()) //testes do raycast
-        {
-            if (isWithinPounceRange() && !isPouncing)
-            {
-                RotateToPlayer();
-                StartCoroutine("PounceTimer", pounceTime);
-            }
-            else if (isWithinReachOfSight() && !isPouncing)
-            {
-                Move();
-                RotateToPlayer();
-            }
-            else if (!isWithinPounceRange() && !isWithinReachOfSight() && !isPouncing)
-            {
-                rb.velocity = Vector2.zero;
-                rb.angularVelocity = 0f;
-            }
-            else if (isPouncing)
-            {
-                RotateToPlayer();
-            }
-        }
-    }
-    */
 
     //Testa se o player entrou dentro do alcance de visao do zombie
     private bool isOnSight()
@@ -357,9 +312,32 @@ public class ZombieAi : MonoBehaviour
         }
     }
     private void Attack(){
-        Debug.Log("ATTACK");
+        if (nextAttackTime < Time.time){
+            attackTimer = 0f;
+            Debug.Log("ATTACK");
+            nextAttackTime = Time.time + attackRate;
+            isAttacking = true;
+            canDamage = true;
+            zombieAnimations.Play("Base Layer.hitting_zombie");
+        }
+        if(isAttacking){
+            Collider2D hit = Physics2D.OverlapCircle((pivot.position + (pivot.right * attackOffset)), attackRadius, layerPlayer);
+            zombieAnimations.SetBool("isHitting", true);
+            if (hit && canDamage){
+                var playerStats = hit.gameObject.GetComponent<PlayerStats>();
+                playerStats.DoDamage(enemyStats.enemyDamage);
+                canDamage = false;
+            }
+            attackTimer += Time.deltaTime;
+            if(attackTimer >= attackRate){
+                isAttacking = false;
+            }
+        }
+        else{
+            canDamage = true;
+            zombieAnimations.SetBool("isHitting", false);
+        }
     }
-
     //Freeze para previnir bugs na tela de game over
     private void Freeze()
     {
@@ -428,10 +406,10 @@ public class ZombieAi : MonoBehaviour
                 if (!IsOnAttackRange())
                 {
                     actualState = (int)state.chase;
+                    zombieAnimations.SetBool("isHitting", false);
                 }
-                else
-                {
-                    Attack();
+                else                {
+                    Invoke("Attack", 0.1f);
                 }
                 break;
         }
@@ -458,6 +436,10 @@ public class ZombieAi : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawRay(pivot.position, frontCollisionRay*pivot.transform.TransformDirection(Vector2.right));
+
+        //atack
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere((pivot.position+(pivot.right*attackOffset)), attackRadius);
 
     }
     
