@@ -94,6 +94,8 @@ public class ZombieAi : MonoBehaviour
     void Update()
     {
         RunStateMachine();
+        Debug.Log(Vector3.Angle(transform.right, playerObject.transform.position));
+
     }
     void FixedUpdate()
     {
@@ -178,7 +180,12 @@ public class ZombieAi : MonoBehaviour
         else
             return false;
     }
-    
+    private bool IsOnAngleSight(){
+        if(Vector3.Angle(transform.right, playerObject.transform.position) < 60)
+            return true;
+        else
+            return false;
+    }
     ///<summary>
     /// Traça raycasts para simular a visão do zombie
     ///</summary>
@@ -226,7 +233,7 @@ public class ZombieAi : MonoBehaviour
     /// Retorna true se o zombie detectar o player
     ///</summary>
     private bool PlayerDetected(){
-        if(isOnSight() && isSeeing()){
+        if(isOnSight() && isSeeing() && IsOnAngleSight()){
             return true;
         }
         else{

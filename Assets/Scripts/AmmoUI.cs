@@ -65,7 +65,6 @@ public class AmmoUI : MonoBehaviour
             {
                 icon.gameObject.SetActive(false);
             }
-            Debug.Log(i);
             i++;
         }
     }
