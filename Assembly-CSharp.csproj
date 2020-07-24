@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\GunStats.cs" />
      <Compile Include="Assets\Scripts\HealthBarEnemy.cs" />
      <Compile Include="Assets\Scripts\HealthBarEnemyFollow.cs" />
+     <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\ManagerScript.cs" />
      <Compile Include="Assets\Scripts\PlayerCombat.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />

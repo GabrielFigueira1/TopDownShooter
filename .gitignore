@@ -72,3 +72,7 @@ crashlytics-build.properties
 
 # TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
+
+#Astar files
+_TerrainAutoUpgrade
+AstarPathfindingProject

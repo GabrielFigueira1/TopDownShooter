@@ -259,7 +259,7 @@ public class ZombieAi : MonoBehaviour
     /// Retorna true se o player sair do alcance do zombie
     ///</summary>
     private bool PlayerRunnedAway(){
-        if(!isSeeing() && timeWithoutSeeingPlayer > 5f){
+        if(!isSeeing() && timeWithoutSeeingPlayer > 2f){
             timeWithoutSeeingPlayer = 0f;
             return true;
         }
@@ -476,7 +476,7 @@ public class ZombieAi : MonoBehaviour
 
         }
     }
-    /*Gizmos*/
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
@@ -504,6 +504,5 @@ public class ZombieAi : MonoBehaviour
         Gizmos.DrawWireSphere((pivot.position+(pivot.right*attackOffset)), attackRadius);
 
     }
-    
 }
     
