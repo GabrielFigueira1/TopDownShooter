@@ -2168,7 +2168,7 @@ MonoBehaviour:
   frontCollisionRay: 0.8
   lerpingIdleSpeed: 1.5
   sightRaycastOffset: 0.35
-  sightRange: 7
+  sightRange: 11
   maxTestRange: 2.87
   minTestRange: 1.66
   pounceForce: 120

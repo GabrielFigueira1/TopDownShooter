@@ -66,7 +66,7 @@ public class ZombieAi : MonoBehaviour
     public float pounceForce = 3f;
     public float pounceDuration = 1f;
     public float pounceDelay;
-    private float pounceEndTime ;
+    private float pounceEndTime;
     private float pounceTimer;
     private bool isPouncing = false;
     [Header("Attack Parameters")]
@@ -143,7 +143,15 @@ public class ZombieAi : MonoBehaviour
                 RaycastHit2D ray = Physics2D.Raycast(pivot.position, pivot.transform.TransformDirection(Vector2.right), frontCollisionRay, layerSolid);
                 if (ray && !isLerping)
                 {
-                    lerpAmount = Random.Range(0.7f, 1.5f) * Random.Range(-1, 2);
+                    int randomMult;
+                    lerpAmount = Random.Range(0.7f, 1.5f); // 35 a 75 graus
+
+                    randomMult = Random.Range(1, 3);
+                    if (randomMult == 2)
+                        randomMult = -1;
+                    lerpingIdleSpeed *= randomMult;                    
+
+                    Debug.Log(lerpingIdleSpeed);
                     isLerping = true;
                 }
             }
@@ -173,6 +181,14 @@ public class ZombieAi : MonoBehaviour
     private bool isOnSight()
     {
         if (Vector2.Distance(player.position, pivot.position) < sightRange)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    private bool PlayerIsTooClose(){
+        if (Vector2.Distance(player.position, pivot.position) < sightRange/4)
         {
             return true;
         }
@@ -232,7 +248,7 @@ public class ZombieAi : MonoBehaviour
     /// Retorna true se o zombie detectar o player
     ///</summary>
     private bool PlayerDetected(){
-        if(isOnSight() && isSeeing() && IsOnAngleSight()){
+        if(isOnSight() && isSeeing() && IsOnAngleSight() || (PlayerIsTooClose() && isSeeing())){
             return true;
         }
         else{
