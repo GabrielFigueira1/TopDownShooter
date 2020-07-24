@@ -56,6 +56,7 @@ public class ZombieAi : MonoBehaviour
 
     public float sightRaycastOffset;
     public float sightRange = 5f;
+    private float timeWithoutSeeingPlayer;
 
     private float lifeRecord;
 
@@ -94,8 +95,6 @@ public class ZombieAi : MonoBehaviour
     void Update()
     {
         RunStateMachine();
-        Debug.Log(Vector3.Angle(transform.right, playerObject.transform.position));
-
     }
     void FixedUpdate()
     {
@@ -244,10 +243,17 @@ public class ZombieAi : MonoBehaviour
     /// Retorna true se o player sair do alcance do zombie
     ///</summary>
     private bool PlayerRunnedAway(){
-        if(!isOnSight() && !isSeeing()){
+        if(!isSeeing() && timeWithoutSeeingPlayer > 5f){
+            timeWithoutSeeingPlayer = 0f;
             return true;
         }
-        return false;
+        else if(!isSeeing()){
+             timeWithoutSeeingPlayer += Time.deltaTime;
+            return false;
+        }
+        else{
+            return false;
+        }
     }
     ///<summary>
     ///Testa se o player esta no alcance para realiza os testes
