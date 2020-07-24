@@ -2089,6 +2089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bar: {fileID: 198238680}
+  life: 10
   enemyDamage: 1
 --- !u!4 &895710343
 Transform:
@@ -2181,6 +2182,7 @@ MonoBehaviour:
   nextTestTime: 0
   maxRandomTimeBetweenTests: 10
   minRandomTimeBetweenTests: 5
+  hittedAnimationTime: 0.5
 --- !u!1 &950445895
 GameObject:
   m_ObjectHideFlags: 0

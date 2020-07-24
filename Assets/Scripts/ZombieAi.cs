@@ -9,7 +9,8 @@ public class ZombieAi : MonoBehaviour
         test,
         chase,
         pounce,
-        attack
+        attack,
+        hitted
     }
     public enum test{
         chase,
@@ -55,6 +56,9 @@ public class ZombieAi : MonoBehaviour
 
     public float sightRaycastOffset;
     public float sightRange = 5f;
+
+    private float lifeRecord;
+
     [Header("Pounce Parameters")]
     public float maxTestRange = 3f;
     public float minTestRange = 2f;
@@ -83,11 +87,9 @@ public class ZombieAi : MonoBehaviour
     [SerializeField]private float minRandomTimeBetweenTests = 1f;
     private bool alreadyPounced;
 
-    
-
-
     void Awake() {
         UpdateRandomAngle();
+        lifeRecord = enemyStats.life;
     }
     void Update()
     {
@@ -98,9 +100,6 @@ public class ZombieAi : MonoBehaviour
         IdlePhysics();
         PouncePhysics();
         ChasePhysics();
-    }
-    void des(){
-        Destroy(gameObject);
     }
     //Metodos de movimento
     private void GetPlayerDirection()
@@ -288,7 +287,6 @@ public class ZombieAi : MonoBehaviour
     private void RandomZombieTest(){
         nextTestTime = Time.time + Random.Range(minRandomTimeBetweenTests, maxRandomTimeBetweenTests);
         testResult = Random.Range(0, 2);
-        Debug.Log("TEST");
     }
     private void PounceReset(){
         alreadyPounced = false;
@@ -351,11 +349,30 @@ public class ZombieAi : MonoBehaviour
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+    ///<summary>
+    ///Classe que verifica se o zombie tomou dano
+    ///</summary>
+    public float hittedAnimationTime;
+    private void HittedProcess(){
+        if(enemyStats.life != lifeRecord){
+            lifeRecord = enemyStats.life;
+            actualState = (int)state.hitted;
+            StartCoroutine("ChangeStateInSeconds", hittedAnimationTime);
+        }
+    }
+    IEnumerator ChangeStateInSeconds(float delay){
+        zombieAnimations.SetBool("hitted", true);
+        zombieAnimations.Play("Base Layer.hitted_zombie");
+        yield return new WaitForSeconds(delay);
+        zombieAnimations.SetBool("hitted", false);
+        actualState = (int)state.chase;
+    }
     /// <summary>
     /// Classe que os processa os estados da máquina de estados
     /// </summary>
     private void RunStateMachine()
     {
+        HittedProcess();
         GetPlayerDirection();
         if(IsOnAttackRange()){
             actualState = (int)state.attack;
@@ -405,7 +422,7 @@ public class ZombieAi : MonoBehaviour
                 zombieAnimations.SetBool("isWalking", false);
                 if (!isPouncing && !alreadyPounced)
                 {
-                    pounceTimer =Time.time + pounceDelay;
+                    pounceTimer = Time.time + pounceDelay;
                     Pounce();
                 }
                 else if(IsAbleToTest() && alreadyPounced)
@@ -424,6 +441,10 @@ public class ZombieAi : MonoBehaviour
                     Attack();
                 }
                 break;
+            case (int)state.hitted:
+
+                break;
+
         }
     }
     /*Gizmos*/

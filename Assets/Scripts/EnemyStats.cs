@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public HealthBarEnemy bar;
-    private float life = 10f;       //Vida do zumbi
+    public float life = 10f;       //Vida do zumbi
     private float maxLife = 10f;
     public float enemyDamage = 2f;    //Dano base do zumbi
     // Start is called before the first frame update
