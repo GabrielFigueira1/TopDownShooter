@@ -34,10 +34,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotatePlayer();
-        UpdateAxisInputs();
-        UpdateWalkAnimation();
-        UpdateSprintButton();
+        if (!PauseMenu.isGamePaused){
+            RotatePlayer();
+            UpdateAxisInputs();
+            UpdateWalkAnimation();
+            UpdateSprintButton();
+        }
     }
 
     void FixedUpdate()

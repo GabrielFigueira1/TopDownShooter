@@ -41,9 +41,11 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleFire();
-        HandleReload();
-        MeleeAtack();
+        if(!PauseMenu.isGamePaused){
+            HandleFire();
+            HandleReload();
+            MeleeAtack();
+        }
     }
 
     // Metodo de atirar do player
