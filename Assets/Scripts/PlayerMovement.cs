@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
 
     public float mouseDeadZone = 1f;
     public float turnRate;
+
+    //Audio
+    private bool isPlayingFootsteps;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,13 +70,22 @@ public class PlayerMovement : MonoBehaviour
 
         
     }
-
     private void UpdateWalkAnimation()
     {
-        if (rb.velocity.magnitude > 0.1)
+        if (rb.velocity.magnitude > 0.1){
             playerAnimation.SetBool("isWalking", true);
-        else
+            if(!isPlayingFootsteps){
+                isPlayingFootsteps = true;
+                FindObjectOfType<AudioManager>().Play("Footsteps");
+            }
+        }
+        else{
+            if(isPlayingFootsteps){
+                FindObjectOfType<AudioManager>().Stop("Footsteps");
+            }
+            isPlayingFootsteps = false;
             playerAnimation.SetBool("isWalking", false);
+        }
     }
 
     private void SmoothMovement()

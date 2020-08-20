@@ -59,11 +59,13 @@ public class GunStats : MonoBehaviour
     /// </summary>
     public void Reload()
     {
+        FindObjectOfType<AudioManager>().Stop("Reload");
         if (extraAmmo > 0)
         {
             isReloading = true;
             endReloadTime = Time.time + reloadTime;
             ammoUI.ReloadBar(isReloading, reloadTime, Time.time);
+            FindObjectOfType<AudioManager>().Play("Reload");
         }
     }
     // Metodo

@@ -8,6 +8,7 @@ public class PlayerCombat : MonoBehaviour
     public Transform firePosition;
     public GameObject Bullet;
     private int selectedWeapon;
+    private float lastShootTime = 0f;
 
     public static GunStats activeWeapon;
     public WeaponChangeHandler weaponChange;
@@ -61,15 +62,31 @@ public class PlayerCombat : MonoBehaviour
             UpdateAmmoUI();
         }
         // Se pode atirar
-        if (Input.GetMouseButtonDown(0) && activeWeapon.canShoot) //left button
-        {
-            activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
-            cancelMeleeAttack(); // cancela um ataque melee
-            activeWeapon.SpendAmmo(); // gasta municao
-            Instantiate(Bullet, firePosition.position, firePosition.rotation); // instancia um objeto bullet
-            playerAnimation.Play("Base Layer.Fire"); // executa animacao de tiro do player
+        if (Input.GetMouseButtonDown(0) && activeWeapon.canShoot && !activeWeapon.isAutomatic) //left button
+        {  
+            if (Time.time > lastShootTime + activeWeapon.fireRate){
+                FindObjectOfType<AudioManager>().Play("PistolFire");
+                lastShootTime = Time.time;
+                activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+                cancelMeleeAttack(); // cancela um ataque melee
+                activeWeapon.SpendAmmo(); // gasta municao
+                Instantiate(Bullet, firePosition.position, firePosition.rotation); // instancia um objeto bullet
+                playerAnimation.Play("Base Layer.Fire"); // executa animacao de tiro do player
+            }
         }
-        else if (Input.GetMouseButtonDown(0) && activeWeapon.canReload)
+        if (Input.GetMouseButton(0) && activeWeapon.canShoot && activeWeapon.isAutomatic) //left button
+        {
+            if (Time.time > lastShootTime + activeWeapon.fireRate){
+                FindObjectOfType<AudioManager>().Play("RifleFire");
+                lastShootTime = Time.time;
+                activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
+                cancelMeleeAttack(); // cancela um ataque melee
+                activeWeapon.SpendAmmo(); // gasta municao
+                Instantiate(Bullet, firePosition.position, firePosition.rotation); // instancia um objeto bullet
+                playerAnimation.Play("Base Layer.Fire"); // executa animacao de tiro do player
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && activeWeapon.canReload && !activeWeapon.IsLoaded())
         { // Sem municao. Da o reload ao tentar atirar
             activeWeapon.Reload();
         }
@@ -94,6 +111,7 @@ public class PlayerCombat : MonoBehaviour
             activeWeapon.cancelReload(); // cancela um reload se estiver acontecendo
             // Animacao de ataque melee
             playerAnimation.Play("Base Layer.Melee");
+            FindObjectOfType<AudioManager>().Play("Knife");
             // Atualiza o timer do attackRate 
             meleeAttackTime = Time.time;
 

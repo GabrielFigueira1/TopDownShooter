@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AmmoUI.cs" />
+     <Compile Include="Assets\Scripts\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\EnemyStats.cs" />
@@ -50,6 +51,7 @@
      <Compile Include="Assets\Scripts\PlayerCombat.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
+     <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\WeaponChangeHandler.cs" />
      <Compile Include="Assets\Scripts\ZombieAi.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
@@ -98,6 +100,7 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\MentalDreamsAssets\SoldierSoundsPack\ReadMe!.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
