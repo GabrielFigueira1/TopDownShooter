@@ -90,12 +90,18 @@ public class ZombieAi : MonoBehaviour
 
     void Awake() {
         UpdateRandomAngle();
+        
         lifeRecord = enemyStats.life;
     }
-    void Update()
-    {
-        RunStateMachine();
+    void Start() {
+        gameObject.SetActive(false);
+        playerObject = GameObject.Find("Player");
+        player = GameObject.Find("PlayerPivot").GetComponent<Transform>();
     }
+    void Update()
+    {   
+        RunStateMachine();
+  }
     void FixedUpdate()
     {
         IdlePhysics();
